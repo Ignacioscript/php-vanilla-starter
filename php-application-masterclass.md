@@ -18,21 +18,77 @@ This tutorial builds a **real template** for any professional PHP app—from mic
 
 ---
 
-# ✅ Enumerated Build Steps (What to Create, In Order)
+# ✅ Project Navigation Map (Step‑by‑Step File Path Guide)
 
-1. **Create the directory structure** (Phase 1).  
-2. **Initialize Composer** + PSR‑4 autoloading (Phase 2).  
-3. **Build the Environment Loader** and `.env` (Phase 3).  
-4. **Implement the PSR‑11 DI Container** (Phase 4).  
-5. **Create PSR‑7 style Request/Response** classes (Phase 5).  
-6. **Build the Router + route matching** (Phase 6).  
-7. **Add Middleware pipeline** (Phase 6).  
-8. **Configure PDO + Repository layer** (Phase 7).  
-9. **Add Service layer + PokeAPI client** (Phase 8).  
-10. **Create DTOs with PHP 8.4/8.5 features** (Phase 9).  
-11. **Build the Renderer + Layout engine** (Phase 10).  
-12. **Add helper functions + security** (Phase 11).  
-13. **Walk through full request lifecycle** (Phase 12).  
+Follow this in order. Each step tells you **exactly which file to create/edit** and what to do.
+
+1. **Create the directory structure**  
+   - Create: `/app`, `/config`, `/public`, `/resources/views`, `/storage`, `/tests`  
+   - Create subfolders: `/app/Core`, `/app/Http`, `/app/Services`, `/app/Repositories`, `/resources/views/layouts`, `/resources/views/pokemon`
+
+2. **Initialize Composer + Autoloading**  
+   - Create: `/composer.json`  
+   - Action: Add PSR‑4 autoload mapping `App\ => app/`  
+   - Run: `composer install` and `composer dump-autoload`
+
+3. **Environment Loader + .env**  
+   - Create: `/app/Core/EnvironmentLoader.php`  
+   - Create: `/.env.example`  
+   - Action: Parse `.env` and store variables internally (no global pollution)
+
+4. **Configuration Files**  
+   - Create: `/config/app.php`  
+   - Create: `/config/database.php`  
+   - Action: Read environment values and return arrays
+
+5. **Dependency Injection Container (PSR‑11)**  
+   - Create: `/app/Core/Container.php`  
+   - Create: `/app/Core/Exceptions/ContainerException.php`  
+   - Create: `/app/Core/Exceptions/NotFoundException.php`  
+   - Action: Resolve class dependencies using Reflection
+
+6. **Helpers and Security Utilities**  
+   - Create: `/app/Core/helpers.php`  
+   - Action: Add `escape()` and `jsonResponse()` helper functions
+
+7. **Request / Response Objects**  
+   - Create: `/app/Http/Request.php`  
+   - Create: `/app/Http/Response.php`  
+   - Action: Build immutable request and response classes
+
+8. **Router + Dispatching**  
+   - Create: `/app/Http/Router.php`  
+   - Action: Add GET route registration and regex matching for `{param}`
+
+9. **Controller Layer**  
+   - Create: `/app/Http/Controllers/PokemonController.php`  
+   - Action: Read PokemonService + Renderer, return Response
+
+10. **Service Layer (PokeAPI)**  
+   - Create: `/app/Services/PokemonService.php`  
+   - Action: HTTP request to `https://pokeapi.co/api/v2/pokemon/{name}`
+
+11. **DTO Layer**  
+   - Create: `/app/DTO/PokemonDTO.php`  
+   - Action: Use `public private(set)` and property hooks
+
+12. **View Renderer**  
+   - Create: `/app/Core/Renderer.php`  
+   - Action: Use `ob_start()` + `extract()` + layout support
+
+13. **Views**  
+   - Create: `/resources/views/layouts/main.php`  
+   - Create: `/resources/views/pokemon/show.php`  
+   - Action: Render Pokémon details using `escape()`
+
+14. **Front Controller**  
+   - Create: `/public/index.php`  
+   - Action: Bootstrap env, config, DI container, routes, and dispatch
+
+15. **Storage + Tests placeholders**  
+   - Create: `/storage/.gitkeep`  
+   - Create: `/tests/Unit/.gitkeep`  
+   - Create: `/tests/Feature/.gitkeep`
 
 ---
 
@@ -46,6 +102,7 @@ A secure PHP app begins with **segregated structure** and a **public-only** web 
   /Http
   /Services
   /Repositories
+  /DTO
 /config
 /public
 /resources/views
@@ -62,6 +119,7 @@ A secure PHP app begins with **segregated structure** and a **public-only** web 
 | /app/Http | Router, controllers, middleware |
 | /app/Services | Business logic + external API integration |
 | /app/Repositories | Data access layer |
+| /app/DTO | Data Transfer Objects |
 | /config | Config arrays loaded during bootstrap |
 | /public | Front controller (`index.php`) + public assets |
 | /resources/views | HTML/PHP templates |
