@@ -21,6 +21,7 @@ final class Router
 
     private function addRoute(string $method, string $path, callable|array $handler): void
     {
+        // Perform a regular expression search and replace
         $pattern = preg_replace('#\{([a-zA-Z_][a-zA-Z0-9_-]*)\}#', '(?P<$1>[a-zA-Z0-9_-]+)', $path);
         $pattern = '#^' . $pattern . '$#';
 
@@ -56,7 +57,7 @@ final class Router
     private function invokeHandler(callable|array $handler, array $params): Response
     {
         if (is_array($handler)) {
-            [$class, $method] = $handler;
+            [$class, $method] = $handler; // old way $class = $handler[0] and $method = $handler[1], this workds with , spearators to assing the values.
             $instance = $this->container->get($class);
             return $instance->{$method}(...array_values($params));
         }

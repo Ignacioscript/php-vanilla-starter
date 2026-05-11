@@ -18,7 +18,7 @@ final class Request
     public static function capture(): self
     {
         $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
-        $uri = strtok($_SERVER['REQUEST_URI'] ?? '/', '?');
+        $uri = strtok($_SERVER['REQUEST_URI'] ?? '/', '?'); // strtok -> split at token: in this case '?' /pokemon/pikachu?type=electric = /pokemon/pikachu and remove the query part
 
         return new self(
             $method,

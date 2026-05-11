@@ -12,9 +12,10 @@ final class PokemonService
     {
     }
 
-    public function getPokemon(string $name): ?PokemonDTO
+    public function getPokemon(string $name): ?PokemonDTO // PokemonDTO|null
     {
         $cleanName = $name |> strtolower(...); // PHP 8.5 pipe operator
+       // $cleanName = strtolower($name); // PHP 8.5 pipe operator replacement
 
         $context = stream_context_create([
             'http' => [

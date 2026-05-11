@@ -9,4 +9,5 @@ return [
     'database' => $env['DB_NAME'] ?? 'pokedex',
     'username' => $env['DB_USER'] ?? 'root',
     'password' => $env['DB_PASS'] ?? '',
+    'charset' => $env['CHAR_SET'] ?? 'utf8mb4',
 ];
